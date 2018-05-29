@@ -1,0 +1,153 @@
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import android.widget.FrameLayout;
+
+
+public class MainActivity extends Activity {
+	
+	//private boolean commstate = false;
+	private Button Run;
+	//private float xAxis=200;//总坐标
+	//private float yAxis=200;//总坐标
+	public car car_1;
+	public float xDraft;//偏移坐标
+	public float yDraft;//偏移坐标
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		final FrameLayout frame = (FrameLayout) findViewById(R.id.FrameLayout1);
+		final car car_1 = new car(MainActivity.this);
+		
+		//xAxis = car_1.bitmapX+xDraft;
+		//yAxis = car_1.bitmapY+yDraft;
+		
+		/*car_1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+            	//设置小车显示的位置
+				car_1.bitmapX = event.getX();
+				car_1.bitmapY = event.getY();
+				//调用重绘方法
+				car_1.invalidate();
+				return false;
+            }
+        });*/
+
+		Run = (Button)findViewById(R.id.button);	
+		Run.setOnClickListener(new View.OnClickListener() {		
+			@Override
+			public void onClick(View v) {
+				// 按键监听，小车移动
+				//ShowMessage("小车开始移动");
+				if(car_1.bitmapX==0&&car_1.bitmapY <= 800){
+					float xDraft = 0;
+	                float yDraft = 20;
+	                //moveTo(car_1.bitmapX+xDraft, car_1.bitmapY+yDraft);
+	                car_1.bitmapX = car_1.bitmapX+xDraft;
+	    	        car_1.bitmapY = car_1.bitmapY+yDraft;
+	    	        car_1.invalidate();
+	    	        
+	    	        Line line = new Line(MainActivity.this);
+
+	    	        line.startX =  car_1.bitmapX+100;
+	    	        line.startY = car_1.bitmapY+100;
+	    	        line.endX = car_1.bitmapX+xDraft+100;
+	    	        line.endY = car_1.bitmapY+yDraft+100;
+
+	    	        frame.addView(line);
+	    	        line.invalidate();
+				}
+				if(car_1.bitmapX<=500&&car_1.bitmapY==800){
+					float xDraft = 20;
+	                float yDraft = 0;
+	                car_1.bitmapX = car_1.bitmapX+xDraft;
+	                car_1.bitmapY = car_1.bitmapY+yDraft;
+	    	        car_1.invalidate();
+	    	        
+	    	        Line line = new Line(MainActivity.this);
+
+	    	        line.startX =  car_1.bitmapX+100;
+	    	        line.startY = car_1.bitmapY+100;
+	    	        line.endX = car_1.bitmapX+xDraft+100;
+	    	        line.endY = car_1.bitmapY+yDraft+100;
+
+	    	        frame.addView(line);
+	    	        line.invalidate();
+				}
+				if(car_1.bitmapX==500&&car_1.bitmapY>=60){
+					float xDraft = 0;
+	                float yDraft = 20;
+	                car_1.bitmapX = car_1.bitmapX+xDraft;
+	                car_1.bitmapY = car_1.bitmapY-yDraft;
+	    	        car_1.invalidate();
+	    	        
+	    	        Line line = new Line(MainActivity.this);
+
+	    	        line.startX =  car_1.bitmapX+100;
+	    	        line.startY = car_1.bitmapY+100;
+	    	        line.endX = car_1.bitmapX+xDraft+100;
+	    	        line.endY = car_1.bitmapY+yDraft+100;
+
+	    	        frame.addView(line);
+	    	        line.invalidate();
+				}
+				if(car_1.bitmapX>=0&&car_1.bitmapY==60){
+					float xDraft = 20;
+	                float yDraft = 0;
+	                car_1.bitmapX = car_1.bitmapX-xDraft;
+	                car_1.bitmapY = car_1.bitmapY+yDraft;
+	    	        car_1.invalidate();
+	    	        
+	    	        Line line = new Line(MainActivity.this);
+
+	    	        line.startX =  car_1.bitmapX+100;
+	    	        line.startY = car_1.bitmapY+100;
+	    	        line.endX = car_1.bitmapX+xDraft+100;
+	    	        line.endY = car_1.bitmapY+yDraft+100;
+
+	    	        frame.addView(line);
+	    	        line.invalidate();
+				}
+			}
+				
+		});
+	
+		frame.addView(car_1);	
+	}
+	public void ShowMessage(String str)    //打印提示信息
+	{
+		Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+	}
+	
+	 /*public void move(float xDraft, float yDraft) {
+	        moveTo(xAxis + xDraft, yAxis + yDraft);
+	 }*/
+	 
+	 /*public void moveTo(float x, float y) {
+
+	        car_1.bitmapX = x;
+	        car_1.bitmapY = y;
+	        car_1.invalidate();
+
+	        Line line = new Line(MainActivity.this);
+
+	        line.startX =  xAxis;
+	        line.startY = yAxis;
+	        line.endX = x;
+	        line.endY = y;
+
+	        frame.addView(line);
+	        line.invalidate();
+
+	        //xAxis = x;
+	        //yAxis = y;
+	    }*/
+
+}
